@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+//import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:book_ui/views/components/book_tile.dart';
 import 'package:book_ui/views/components/author_tile.dart';
@@ -31,10 +31,6 @@ class ResearchScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   hintText: 'Rechercher',
-                  suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.search_outlined),
-                  ),
                   contentPadding: const EdgeInsets.symmetric(
                     vertical: 10.0,
                     horizontal: 12.0,

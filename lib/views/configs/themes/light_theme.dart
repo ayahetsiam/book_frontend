@@ -65,14 +65,17 @@ class AppTheme {
               color: AppColor.onSurfaceColor,
               fontWeight: AppStyle.titleFontWeight),
         ),
-        textButtonTheme: TextButtonThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
                 textStyle: MaterialStateProperty.all(
-          TextStyle(
-              fontWeight: AppStyle.titleFontWeight,
-              color: AppColor.primaryColor,
-              fontSize: AppStyle.mediumTextSize),
-        ))),
+                  const TextStyle(
+                      fontWeight: AppStyle.titleFontWeight,
+                      fontSize: AppStyle.mediumTextSize),
+                ),
+                backgroundColor:
+                    MaterialStateProperty.all(AppColor.primaryColor),
+                foregroundColor:
+                    MaterialStateProperty.all(AppColor.onPrimaryColor))),
         dividerTheme: DividerThemeData(color: AppColor.secondaryColor),
         expansionTileTheme: ExpansionTileThemeData(
           iconColor: AppColor.secondaryColor,

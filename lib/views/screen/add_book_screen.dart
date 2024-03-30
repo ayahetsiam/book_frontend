@@ -112,14 +112,10 @@ class AddBookScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                ButtonBar(
-                  children: <Widget>[
-                    TextButton(
-                      onPressed: () => validateForm(context),
-                      child: const Text('Valider'),
-                    ),
-                  ],
-                ),
+                const Gap(16),
+                ElevatedButton(
+                    onPressed: () => validateForm(context),
+                    child: const Text("Valider"))
               ],
             ),
           ),
