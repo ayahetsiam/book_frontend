@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:book_ui/views/components/book_tile.dart';
 import 'package:book_ui/views/components/author_tile.dart';
@@ -19,7 +20,7 @@ class ResearchScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
+        child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -47,12 +48,14 @@ class ResearchScreen extends StatelessWidget {
               child: bookPage(context),
             ),*/
             //bookPage(context),
-            IndexedStack(
-              index: tabIndex,
-              children: [
-                bookPage(context),
-                authorPage(),
-              ],
+            Expanded(
+              child: IndexedStack(
+                index: tabIndex,
+                children: [
+                  bookPage(context),
+                  authorPage(),
+                ],
+              ),
             ),
           ],
         ),
