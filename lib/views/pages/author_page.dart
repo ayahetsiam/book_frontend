@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 class AuthorPage extends StatelessWidget {
   const AuthorPage({super.key});
 
+  onPressOnAddAuthor(BuildContext context) {
+    Navigator.of(context).pushNamed("addAuthor");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,8 +17,9 @@ class AuthorPage extends StatelessWidget {
               (index) => const AuthorTile(
                     title: "Gustave Flauber",
                   ))),
-      floatingActionButton: const FloatingActionButton(
-          onPressed: null, child: Icon(Icons.person_add_alt_outlined)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => {onPressOnAddAuthor(context)},
+          child: const Icon(Icons.person_add_alt_outlined)),
     );
   }
 }
