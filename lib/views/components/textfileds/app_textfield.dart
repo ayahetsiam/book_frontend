@@ -5,9 +5,10 @@ class AppTextFileld extends StatelessWidget {
       {super.key,
       required this.textInputType,
       required this.labeltext,
-      //required this.validator,
+      required this.validator,
       //required this.onSaveFonction,
       required this.textEditingController,
+      // required this.err,
       this.hinttext,
       this.readOnly});
 
@@ -15,30 +16,28 @@ class AppTextFileld extends StatelessWidget {
   final String? hinttext;
   final String labeltext;
   final bool? readOnly;
-  //Afinal Function(String?) validator;
+  final Function(String?) validator;
   //final Function onSaveFonction;
   final TextEditingController textEditingController;
+  //final String err;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       style: Theme.of(context).textTheme.bodyMedium,
-
       decoration: InputDecoration(
-        hintText: hinttext ?? "",
-        labelText: labeltext,
+        hintText: hinttext ?? "", labelText: labeltext,
+        //errorText: err
       ),
-      autocorrect: true,
+      autovalidateMode: AutovalidateMode.always,
       keyboardType: textInputType,
       keyboardAppearance: Theme.of(context).brightness,
       readOnly: readOnly ?? false,
-      /*validator: (String? value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter some text';
+      validator: (value) {
+        if (value!.length > 4) {
+          return "pardon!";
         }
-        return null;
-      },*/
-      //validator: (value) => validator(value),
+      },
       //onSaved: (value) => onSaveFonction(value),
       controller: textEditingController,
     );

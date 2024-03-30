@@ -55,7 +55,7 @@ class ModifyBookScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      AppTextFileld(
+                      /*AppTextFileld(
                         textEditingController: isbnTextController,
                         textInputType: TextInputType.name,
                         //hinttext: "Entrez ISBN du libre",
@@ -110,7 +110,7 @@ class ModifyBookScreen extends StatelessWidget {
                         readOnly: true,
                         //validator: (value) => titleValidator(value),
                         //onSaveFonction: (value) => onSaveFirstName(value),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

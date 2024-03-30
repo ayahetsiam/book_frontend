@@ -4,17 +4,25 @@ import 'package:gap/gap.dart';
 import 'package:book_ui/views/components/app_snake_bar.dart';
 
 // ignore: must_be_immutable
-class AddAuthorScreen extends StatelessWidget {
+class AddAuthorScreen extends StatefulWidget {
   const AddAuthorScreen({super.key});
 
-  /*String? nameValidator(String? value) {
-    if (value != null && value.contains("@")) {
-      return "Le nom ne doit pas contenir '@'";
+  @override
+  State<AddAuthorScreen> createState() => _AddAuthorScreenState();
+}
+
+class _AddAuthorScreenState extends State<AddAuthorScreen> {
+  String? nameValidator(String? value) {
+    if (value != null) {
+      if ((value.length == 1 && int.tryParse(value) != null) ||
+          (int.tryParse(value) != null)) {
+        return "Le nom ne doit pas commencer un chiffre";
+      }
     }
     return null;
   }
 
-  firstNameValidator(String? value) {
+  /*firstNameValidator(String? value) {
     (value != null && value.contains("@") ? "Nom ne doit pas avoir @" : null);
   }
 
@@ -33,6 +41,7 @@ class AddAuthorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
     TextEditingController nameTextcontroller = TextEditingController();
     TextEditingController firstnameTextcontroller = TextEditingController();
     return Scaffold(
@@ -58,9 +67,11 @@ class AddAuthorScreen extends StatelessWidget {
                         textInputType: TextInputType.name,
                         hinttext: "Entrez votre nom",
                         labeltext: "Nom *",
+                        validator: nameValidator,
+                          //err: nameValidator(),
                         //onSaveFonction: (value) => onSaveName(value),
                       ),
-                      const Gap(20),
+                      /*const Gap(20),
                       AppTextFileld(
                         textEditingController: firstnameTextcontroller,
                         textInputType: TextInputType.name,
@@ -68,7 +79,7 @@ class AddAuthorScreen extends StatelessWidget {
                         labeltext: "Prenom *",
                         //validator: firstNameValidator,
                         //onSaveFonction: (value) => onSaveFirstName(value),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

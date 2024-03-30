@@ -55,7 +55,7 @@ class AddBookScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      AppTextFileld(
+                      /*AppTextFileld(
                         textEditingController: isbnTextController,
                         textInputType: TextInputType.name,
                         hinttext: "Entrez ISBN du libre",
@@ -108,7 +108,7 @@ class AddBookScreen extends StatelessWidget {
                           "Option 3",
                           "Option 4"
                         ],
-                      )
+                      )*/
                     ],
                   ),
                 ),

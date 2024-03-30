@@ -29,7 +29,7 @@ class _AppComboboxTextFieldState extends State<AppComboboxTextField> {
             );
           }).toList(),
           decoration: const InputDecoration(
-            labelText: "Author",
+            labelText: "Auteur",
           ),
         ),
       ],

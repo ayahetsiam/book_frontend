@@ -53,7 +53,7 @@ class ModifyAuthorScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      AppTextFileld(
+                      /*AppTextFileld(
                         textEditingController: nameTextcontroller,
                         textInputType: TextInputType.name,
                         hinttext: "Entrez votre nom",
@@ -68,7 +68,7 @@ class ModifyAuthorScreen extends StatelessWidget {
                         labeltext: "Prenom *",
                         //validator: firstNameValidator,
                         //onSaveFonction: (value) => onSaveFirstName(value),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
