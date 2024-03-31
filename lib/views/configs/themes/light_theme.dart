@@ -17,19 +17,6 @@ class AppTheme {
     onError: AppColor.onErrorColor,
   );
 
-  static const darkColorsScheme = ColorScheme(
-    brightness: Brightness.dark,
-    primary: Colors.purple,
-    onPrimary: Colors.black,
-    secondary: Color.fromARGB(255, 67, 64, 69),
-    error: Colors.red,
-    background: Color.fromARGB(255, 28, 28, 28),
-    surface: Colors.white,
-    onSecondary: Colors.white,
-    onSurface: Colors.black,
-    onBackground: Colors.white,
-    onError: Colors.white,
-  );
   static ThemeData getLightTheme() {
     return ThemeData(
         colorScheme: lightColorsScheme,
@@ -102,16 +89,13 @@ class AppTheme {
             backgroundColor: AppColor.primaryColor,
             foregroundColor: AppColor.onPrimaryColor),
         inputDecorationTheme: InputDecorationTheme(
-          activeIndicatorBorder: BorderSide(
-            color: AppColor.secondaryColor,
-            style: BorderStyle.solid,
-          ),
-          labelStyle: TextStyle(
+            activeIndicatorBorder: BorderSide(
               color: AppColor.secondaryColor,
-              fontWeight: AppStyle.titleFontWeight,
-              fontSize: AppStyle.mediumTextSize),
-          hintStyle: const TextStyle(fontSize: AppStyle.normalTextSize),
-        ),
+              style: BorderStyle.solid,
+            ),
+            labelStyle: const TextStyle(
+                fontWeight: AppStyle.titleFontWeight,
+                fontSize: AppStyle.mediumTextSize)),
         tabBarTheme: TabBarTheme(
             unselectedLabelStyle: TextStyle(
                 fontSize: AppStyle.tabSize, color: AppColor.onPrimaryColor),

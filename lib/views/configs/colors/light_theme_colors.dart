@@ -11,6 +11,6 @@ class AppColor {
 
   static const Color onSurfaceColor = Colors.black;
   static Color surfaceColor = const Color(0xFFF2F2F7);
-  static Color errorColor = Colors.white;
-  static Color onErrorColor = Colors.red;
+  static Color errorColor = Colors.red;
+  static Color onErrorColor = Colors.white;
 }

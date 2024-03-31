@@ -6,22 +6,23 @@ import 'package:gap/gap.dart';
 class ModifyBookScreen extends StatelessWidget {
   const ModifyBookScreen({super.key});
 
-  /*isbnValidator(String? value) {
-    debugPrint(value);
-    (value != null && value.contains("@") ? "Nom ne doit pas avoir @" : null);
+  String? titleValidator(String? value) {
+    return value != null && value.contains("@")
+        ? "le titre ne doit pas avoir @"
+        : null;
   }
 
-  titleValidator(String? value) {
-    (value != null && value.contains("@") ? "Nom ne doit pas avoir @" : null);
+  String? artworkValidator(String? value) {
+    return value != null && value.contains("@")
+        ? "l'oeuvre ne doit pas avoir @"
+        : null;
   }
 
-  onSaveName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
+  String? pageNumberValidator(String? value) {
+    return value != null && int.tryParse(value) != null
+        ? "Le nombre de page doit être un entier"
+        : null;
   }
-
-  onSaveFirstName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
-  }*/
 
   void validateForm(BuildContext context) {
     Navigator.of(context).pop();
@@ -55,23 +56,19 @@ class ModifyBookScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      /*AppTextFileld(
+                      AppTextFileld(
                         textEditingController: isbnTextController,
                         textInputType: TextInputType.name,
-                        //hinttext: "Entrez ISBN du libre",
                         labeltext: "ISBN *",
                         readOnly: true,
-                        //validator: (value) => isbnValidator(value),
-                        //onSaveFonction: (value) => onSaveName(value),
+                        validator: (value) => null,
                       ),
                       const Gap(16),
                       AppTextFileld(
                         textEditingController: titleTextController,
                         textInputType: TextInputType.name,
-                        //hinttext: "Entrez le titre",
                         labeltext: "Titre *",
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
+                        validator: (value) => titleValidator(value),
                       ),
                       const Gap(16),
                       AppTextFileld(
@@ -79,8 +76,7 @@ class ModifyBookScreen extends StatelessWidget {
                         textInputType: TextInputType.name,
                         hinttext: "Entrez l'oeuvre",
                         labeltext: "Oeuvre *",
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
+                        validator: (value) => artworkValidator(value),
                       ),
                       const Gap(16),
                       AppTextFileld(
@@ -88,29 +84,24 @@ class ModifyBookScreen extends StatelessWidget {
                         textInputType: TextInputType.number,
                         hinttext: "Entrez le nombre de pages",
                         labeltext: "Nombre de pages *",
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
+                        validator: (value) => pageNumberValidator(value),
                       ),
                       const Gap(16),
                       AppTextFileld(
                         textEditingController: dateTextController,
                         textInputType: TextInputType.datetime,
-                        //hinttext: "Entrez la date de publication",
                         labeltext: "Date de publication ",
                         readOnly: true,
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
+                        validator: (value) => titleValidator(value),
                       ),
                       const Gap(16),
                       AppTextFileld(
                         textEditingController: authorTextController,
                         textInputType: TextInputType.datetime,
-                        //hinttext: "Entrez la date de publication",
-                        labeltext: "Auteur ",
+                        labeltext: "Auteur",
                         readOnly: true,
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
-                      ),*/
+                        validator: (value) => titleValidator(value),
+                      ),
                     ],
                   ),
                 ),

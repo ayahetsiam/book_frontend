@@ -13,26 +13,23 @@ class AddAuthorScreen extends StatefulWidget {
 
 class _AddAuthorScreenState extends State<AddAuthorScreen> {
   String? nameValidator(String? value) {
-    if (value != null) {
-      if ((value.length == 1 && int.tryParse(value) != null) ||
-          (int.tryParse(value) != null)) {
-        return "Le nom ne doit pas commencer un chiffre";
-      }
-    }
-    return null;
+    return value != null
+        ? ((value.length == 1 && int.tryParse(value) != null) ||
+                int.tryParse(value) != null)
+            ? "Le nom ne doit pas commencer par un chiffre"
+            : null
+        : null;
   }
 
-  /*firstNameValidator(String? value) {
-    (value != null && value.contains("@") ? "Nom ne doit pas avoir @" : null);
+  String? firstNameValidator(String? value) {
+    return value != null
+        ? ((value.length == 1 && int.tryParse(value) != null) ||
+                int.tryParse(value) != null)
+            ? "Le prénom ne doit pas commencer par un chiffre"
+            : null
+        : null;
   }
 
-  onSaveName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
-  }
-
-  onSaveFirstName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
-  }*/
   void validateForm(BuildContext context) {
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context)
@@ -41,7 +38,6 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
 
   @override
   Widget build(BuildContext context) {
-  
     TextEditingController nameTextcontroller = TextEditingController();
     TextEditingController firstnameTextcontroller = TextEditingController();
     return Scaffold(
@@ -68,18 +64,16 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
                         hinttext: "Entrez votre nom",
                         labeltext: "Nom *",
                         validator: nameValidator,
-                          //err: nameValidator(),
-                        //onSaveFonction: (value) => onSaveName(value),
                       ),
-                      /*const Gap(20),
+
+                    const Gap(20),
                       AppTextFileld(
                         textEditingController: firstnameTextcontroller,
                         textInputType: TextInputType.name,
                         hinttext: "Entrez votre prenom",
                         labeltext: "Prenom *",
-                        //validator: firstNameValidator,
-                        //onSaveFonction: (value) => onSaveFirstName(value),
-                      ),*/
+                        validator: firstNameValidator,
+                      ),
                     ],
                   ),
                 ),

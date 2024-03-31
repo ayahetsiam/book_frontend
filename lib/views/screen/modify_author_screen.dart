@@ -7,24 +7,24 @@ import 'package:book_ui/views/components/app_snake_bar.dart';
 class ModifyAuthorScreen extends StatelessWidget {
   const ModifyAuthorScreen({super.key});
 
-  /*String? nameValidator(String? value) {
-    if (value != null && value.contains("@")) {
-      return "Le nom ne doit pas contenir '@'";
-    }
-    return null;
+  String? nameValidator(String? value) {
+    return value != null
+        ? ((value.length == 1 && int.tryParse(value) != null) ||
+                int.tryParse(value) != null)
+            ? "Le nom ne doit pas commencer par un chiffre"
+            : null
+        : null;
   }
 
-  firstNameValidator(String? value) {
-    (value != null && value.contains("@") ? "Nom ne doit pas avoir @" : null);
+  String? firstNameValidator(String? value) {
+    return value != null
+        ? ((value.length == 1 && int.tryParse(value) != null) ||
+                int.tryParse(value) != null)
+            ? "Le prénom ne doit pas commencer par un chiffre"
+            : null
+        : null;
   }
 
-  onSaveName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
-  }
-
-  onSaveFirstName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
-  }*/
   void validateForm(BuildContext context) {
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context)
@@ -53,12 +53,12 @@ class ModifyAuthorScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      /*AppTextFileld(
+                      AppTextFileld(
                         textEditingController: nameTextcontroller,
                         textInputType: TextInputType.name,
                         hinttext: "Entrez votre nom",
                         labeltext: "Nom *",
-                        //onSaveFonction: (value) => onSaveName(value),
+                        validator: nameValidator,
                       ),
                       const Gap(20),
                       AppTextFileld(
@@ -66,9 +66,8 @@ class ModifyAuthorScreen extends StatelessWidget {
                         textInputType: TextInputType.name,
                         hinttext: "Entrez votre prenom",
                         labeltext: "Prenom *",
-                        //validator: firstNameValidator,
-                        //onSaveFonction: (value) => onSaveFirstName(value),
-                      ),*/
+                        validator: firstNameValidator,
+                      ),
                     ],
                   ),
                 ),

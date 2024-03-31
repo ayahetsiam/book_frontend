@@ -8,22 +8,29 @@ import 'package:gap/gap.dart';
 class AddBookScreen extends StatelessWidget {
   const AddBookScreen({super.key});
 
-  /*isbnValidator(String? value) {
-    debugPrint(value);
-    (value != null && value.contains("@") ? "Nom ne doit pas avoir @" : null);
+  String? isbnValidator(String? value) {
+    return (value != null && value.contains("@"))
+        ? "L'ISBN ne doit pas contenir @"
+        : null;
   }
 
-  titleValidator(String? value) {
-    (value != null && value.contains("@") ? "Nom ne doit pas avoir @" : null);
+  String? titleValidator(String? value) {
+    return value != null && value.contains("@")
+        ? "le titre ne doit pas avoir @"
+        : null;
   }
 
-  onSaveName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
+  String? artworkValidator(String? value) {
+    return value != null && value.contains("@")
+        ? "l'oeuvre ne doit pas avoir @"
+        : null;
   }
 
-  onSaveFirstName(String? value) {
-    (value == "" ? "Nom ne doit vide" : null);
-  }*/
+  String? pageNumberValidator(String? value) {
+    return value!.length == 1 && int.tryParse(value) == null
+        ? "Le nombre de page doit être un entier"
+        : null;
+  }
 
   void validateForm(BuildContext context) {
     Navigator.of(context).pop();
@@ -55,13 +62,12 @@ class AddBookScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      /*AppTextFileld(
+                      AppTextFileld(
                         textEditingController: isbnTextController,
                         textInputType: TextInputType.name,
                         hinttext: "Entrez ISBN du libre",
                         labeltext: "ISBN *",
-                        //validator: (value) => isbnValidator(value),
-                        //onSaveFonction: (value) => onSaveName(value),
+                        validator: isbnValidator,
                       ),
                       const Gap(16),
                       AppTextFileld(
@@ -69,8 +75,7 @@ class AddBookScreen extends StatelessWidget {
                         textInputType: TextInputType.name,
                         hinttext: "Entrez le titre",
                         labeltext: "Titre *",
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
+                        validator: titleValidator,
                       ),
                       const Gap(16),
                       AppTextFileld(
@@ -78,8 +83,7 @@ class AddBookScreen extends StatelessWidget {
                         textInputType: TextInputType.name,
                         hinttext: "Entrez l'oeuvre",
                         labeltext: "Oeuvre *",
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
+                        validator: artworkValidator,
                       ),
                       const Gap(16),
                       AppTextFileld(
@@ -87,8 +91,7 @@ class AddBookScreen extends StatelessWidget {
                         textInputType: TextInputType.number,
                         hinttext: "Entrez le nombre de pages",
                         labeltext: "Nombre de pages *",
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
+                        validator: pageNumberValidator,
                       ),
                       const Gap(16),
                       DateTextField(
@@ -97,8 +100,6 @@ class AddBookScreen extends StatelessWidget {
                         hinttext: "Entrez la date de publication",
                         labeltext: "Date de publication ",
                         icon: Icons.date_range_outlined,
-                        //validator: (value) => titleValidator(value),
-                        //onSaveFonction: (value) => onSaveFirstName(value),
                       ),
                       const Gap(16),
                       const AppComboboxTextField(
@@ -108,7 +109,7 @@ class AddBookScreen extends StatelessWidget {
                           "Option 3",
                           "Option 4"
                         ],
-                      )*/
+                      )
                     ],
                   ),
                 ),
