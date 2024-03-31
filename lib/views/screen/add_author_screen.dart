@@ -14,8 +14,7 @@ class AddAuthorScreen extends StatefulWidget {
 class _AddAuthorScreenState extends State<AddAuthorScreen> {
   String? nameValidator(String? value) {
     return value != null
-        ? ((value.length == 1 && int.tryParse(value) != null) ||
-                int.tryParse(value) != null)
+        ? (int.tryParse(value) != null) || int.tryParse(value) != null
             ? "Le nom ne doit pas commencer par un chiffre"
             : null
         : null;
@@ -23,8 +22,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
 
   String? firstNameValidator(String? value) {
     return value != null
-        ? ((value.length == 1 && int.tryParse(value) != null) ||
-                int.tryParse(value) != null)
+        ? (int.tryParse(value) != null)
             ? "Le prénom ne doit pas commencer par un chiffre"
             : null
         : null;
@@ -65,8 +63,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
                         labeltext: "Nom *",
                         validator: nameValidator,
                       ),
-
-                    const Gap(20),
+                      const Gap(20),
                       AppTextFileld(
                         textEditingController: firstnameTextcontroller,
                         textInputType: TextInputType.name,

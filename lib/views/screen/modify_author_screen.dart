@@ -9,8 +9,7 @@ class ModifyAuthorScreen extends StatelessWidget {
 
   String? nameValidator(String? value) {
     return value != null
-        ? ((value.length == 1 && int.tryParse(value) != null) ||
-                int.tryParse(value) != null)
+        ? int.tryParse(value) != null
             ? "Le nom ne doit pas commencer par un chiffre"
             : null
         : null;
@@ -18,8 +17,7 @@ class ModifyAuthorScreen extends StatelessWidget {
 
   String? firstNameValidator(String? value) {
     return value != null
-        ? ((value.length == 1 && int.tryParse(value) != null) ||
-                int.tryParse(value) != null)
+        ? int.tryParse(value) != null
             ? "Le prénom ne doit pas commencer par un chiffre"
             : null
         : null;

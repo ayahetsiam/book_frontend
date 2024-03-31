@@ -19,7 +19,7 @@ class ModifyBookScreen extends StatelessWidget {
   }
 
   String? pageNumberValidator(String? value) {
-    return value != null && int.tryParse(value) != null
+    return (value!.isNotEmpty && int.tryParse(value) == null)
         ? "Le nombre de page doit être un entier"
         : null;
   }
