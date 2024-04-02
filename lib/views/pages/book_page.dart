@@ -1,39 +1,47 @@
+
+import 'package:book_ui/data/models/book_models.dart';
 import 'package:book_ui/views/components/book_tile.dart';
 import 'package:flutter/material.dart';
+import '../../data/dataSources/book_data_source.dart';
 
-class BookPage extends StatelessWidget {
+class BookPage extends StatefulWidget {
   const BookPage({super.key});
-  onPressOnAddBook(BuildContext context) {
+
+  @override
+  State<BookPage> createState() => _BookPageState();
+}
+
+class _BookPageState extends State<BookPage> {
+  onPressOnAddBook() {
     Navigator.of(context).pushNamed("addBook");
+  }
+
+  late List<BookModel> bookData;
+
+  getBooks() {
+    bookData = bookDb.map((e) => BookModel.fromJson(e)).toList();
+  }
+
+  @override
+  void initState() {
+    getBooks();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-          children: List.generate(
-              10,
-              (index) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 8),
-                    child: BookTile(
-                        title: "Le roi et sa chèvre",
-                        subtitle: Text.rich(TextSpan(
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            children: const [
-                              TextSpan(
-                                  text:
-                                      "Livre de 124 pages, écrit le 15 fevrier 1950 dans "),
-                              TextSpan(
-                                  text: "sous l'orage",
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline)),
-                              TextSpan(text: " par Gustave flaubert")
-                            ]))),
-                  ))),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return BookTile(
+           book: bookData[index],
+          );
+        },
+        itemCount: bookData.length,
+      ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            onPressOnAddBook(context);
+            onPressOnAddBook();
           },
           child: const Icon(Icons.bookmark_add_outlined)),
     );

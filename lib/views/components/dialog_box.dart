@@ -8,13 +8,13 @@ class ConfirmationDialog extends StatelessWidget {
       required this.onConfirmDeleting})
       : super(key: key);
   final String title;
-  final String content;
+  final Text content;
   final Function? onConfirmDeleting;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      content: Text(content),
+      content: content,
       actions: [
         TextButton(
           onPressed: () {

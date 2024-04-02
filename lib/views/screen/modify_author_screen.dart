@@ -1,11 +1,19 @@
+import 'package:book_ui/data/models/author_model.dart';
 import 'package:book_ui/views/components/textfileds/app_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:book_ui/views/components/app_snake_bar.dart';
 
-// ignore: must_be_immutable
-class ModifyAuthorScreen extends StatelessWidget {
-  const ModifyAuthorScreen({super.key});
+class ModifyAuthorScreen extends StatefulWidget {
+  const ModifyAuthorScreen({super.key, required this.author});
+  final AuthorModel author;
+  @override
+  State<ModifyAuthorScreen> createState() => _ModifyAuthorScreenState();
+}
+
+class _ModifyAuthorScreenState extends State<ModifyAuthorScreen> {
+  TextEditingController nameTextcontroller = TextEditingController();
+  TextEditingController firstnameTextcontroller = TextEditingController();
 
   String? nameValidator(String? value) {
     return value != null
@@ -29,10 +37,19 @@ class ModifyAuthorScreen extends StatelessWidget {
         .showSnackBar(AppSnackBar(snackContent: "Auteur modifié avec succès"));
   }
 
+  getDefaultTextFieldValue() {
+    nameTextcontroller.text = widget.author.name;
+    firstnameTextcontroller.text = widget.author.firstname;
+  }
+
+  @override
+  void initState() {
+    getDefaultTextFieldValue();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameTextcontroller = TextEditingController();
-    TextEditingController firstnameTextcontroller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text(

@@ -14,4 +14,6 @@ class AppStyle {
 
   static const FontWeight titleFontWeight = FontWeight.bold;
   static const FontWeight normalTextFontWeight = FontWeight.normal;
+  static const TextStyle notImportantTitleTextStyle =
+      TextStyle(color: Colors.grey, fontWeight: FontWeight.bold);
 }

@@ -1,42 +1,73 @@
+import 'package:book_ui/data/models/author_model.dart';
 import 'package:book_ui/views/components/app_snake_bar.dart';
 import 'package:book_ui/views/components/dialog_box.dart';
+import 'package:book_ui/views/screen/author_books_screen.dart';
+import 'package:book_ui/views/screen/modify_author_screen.dart';
 import 'package:flutter/material.dart';
 
-class AuthorTile extends StatelessWidget {
+class AuthorTile extends StatefulWidget {
   const AuthorTile({
     Key? key,
-    required this.title,
+    required this.author,
   }) : super(key: key);
 
-  final String title;
+  final AuthorModel author;
 
+  @override
+  State<AuthorTile> createState() => _AuthorTileState();
+}
+
+class _AuthorTileState extends State<AuthorTile> {
   void deleteOperation() {
     debugPrint("alaj");
   }
 
-  void clickOnDelete(BuildContext context) {
+  void clickOnDelete() {
     showDialog(
         context: context,
         builder: (context) => ConfirmationDialog(
             title: "Confirmation",
-            content: "Êtes-vous sûr de vouloir supprimer ce livre ?",
+            content: Text.rich(TextSpan(
+              children: [
+                const TextSpan(
+                    text: "Êtes-vous sûr de vouloir supprimer l'auteur "),
+                TextSpan(
+                    text: "${widget.author.firstname} ${widget.author.name} ",
+                    style: Theme.of(context).textTheme.titleMedium),
+                const TextSpan(text: "?"),
+              ],
+            )),
             onConfirmDeleting: deleteOperation),
         barrierDismissible: false);
   }
 
-  void clickOnModify(BuildContext context) {
-    Navigator.of(context).pushNamed("modifyAuthor");
+  void clickOnModify() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ModifyAuthorScreen(
+          author: widget.author,
+        ),
+      ),
+    );
   }
 
-  void clickOnDetail(BuildContext context) {
-    Navigator.of(context).pushNamed("authorBooks");
+  void clickOnDetail() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AuthorDetailScreen(
+          author: widget.author,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text(
-        title,
+        "${widget.author.firstname} ${widget.author.name}",
       ),
       leading: const Icon(Icons.person_3_outlined),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +85,7 @@ class AuthorTile extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () => {
-                clickOnModify(context),
+                clickOnModify(),
               },
               icon: const Icon(
                 Icons.edit_outlined,
@@ -63,7 +94,7 @@ class AuthorTile extends StatelessWidget {
             ),
             IconButton(
               onPressed: () => {
-                clickOnDelete(context),
+                clickOnDelete(),
                 ScaffoldMessenger.of(context).showSnackBar(
                     AppSnackBar(snackContent: "Livre supprimé avec succès"))
               },
@@ -74,7 +105,7 @@ class AuthorTile extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () => clickOnDetail(context),
+              onPressed: () => clickOnDetail(),
               icon: const Icon(
                 Icons.read_more,
                 color: Colors.green, // Replace with your color

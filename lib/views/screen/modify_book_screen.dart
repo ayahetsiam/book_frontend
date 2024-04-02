@@ -1,10 +1,25 @@
+import 'package:book_ui/data/models/book_models.dart';
 import 'package:book_ui/views/components/textfileds/app_textfield.dart';
 import 'package:book_ui/views/components/app_snake_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:book_ui/views/configs/style.dart';
 
-class ModifyBookScreen extends StatelessWidget {
-  const ModifyBookScreen({super.key});
+class ModifyBookScreen extends StatefulWidget {
+  final BookModel book;
+  const ModifyBookScreen({super.key, required this.book});
+
+  @override
+  State<ModifyBookScreen> createState() => _ModifyBookScreenState();
+}
+
+class _ModifyBookScreenState extends State<ModifyBookScreen> {
+  TextEditingController isbnTextController = TextEditingController();
+  TextEditingController titleTextController = TextEditingController();
+  TextEditingController artworkTextController = TextEditingController();
+  TextEditingController pageNumberTextController = TextEditingController();
+  TextEditingController dateTextController = TextEditingController();
+  TextEditingController authorTextController = TextEditingController();
 
   String? titleValidator(String? value) {
     return value != null && value.contains("@")
@@ -30,15 +45,20 @@ class ModifyBookScreen extends StatelessWidget {
         .showSnackBar(AppSnackBar(snackContent: "Livre modifié avec succès"));
   }
 
+  getDefault() {
+    titleTextController.text = widget.book.title;
+    artworkTextController.text = widget.book.artwork;
+    pageNumberTextController.text = widget.book.page.toString();
+  }
+
+  @override
+  void initState() {
+    getDefault();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController isbnTextController = TextEditingController();
-    TextEditingController titleTextController = TextEditingController();
-    TextEditingController artworkTextController = TextEditingController();
-    TextEditingController pageNumberTextController = TextEditingController();
-    TextEditingController dateTextController = TextEditingController();
-    TextEditingController authorTextController =
-        TextEditingController(text: "ama");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -56,14 +76,38 @@ class ModifyBookScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      AppTextFileld(
-                        textEditingController: isbnTextController,
-                        textInputType: TextInputType.name,
-                        labeltext: "ISBN *",
-                        readOnly: true,
-                        validator: (value) => null,
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Text("ISBN : ",
+                                  style: AppStyle.notImportantTitleTextStyle),
+                              const Gap(4),
+                              Text(widget.book.isbn),
+                            ],
+                          ),
+                          const Gap(16),
+                          Row(
+                            children: [
+                              const Text("Auteur : ",
+                                  style: AppStyle.notImportantTitleTextStyle),
+                              const Gap(4),
+                              Text(
+                                  "${widget.book.author.firstname} ${widget.book.author.name}"),
+                            ],
+                          ),
+                          const Gap(16),
+                          Row(
+                            children: [
+                              const Text("Date de publication : ",
+                                  style: AppStyle.notImportantTitleTextStyle),
+                              const Gap(4),
+                              Text(widget.book.writtenAt),
+                            ],
+                          ),
+                        ],
                       ),
-                      const Gap(16),
+                      const Gap(24),
                       AppTextFileld(
                         textEditingController: titleTextController,
                         textInputType: TextInputType.name,
@@ -85,22 +129,6 @@ class ModifyBookScreen extends StatelessWidget {
                         hinttext: "Entrez le nombre de pages",
                         labeltext: "Nombre de pages *",
                         validator: (value) => pageNumberValidator(value),
-                      ),
-                      const Gap(16),
-                      AppTextFileld(
-                        textEditingController: dateTextController,
-                        textInputType: TextInputType.datetime,
-                        labeltext: "Date de publication ",
-                        readOnly: true,
-                        validator: (value) => titleValidator(value),
-                      ),
-                      const Gap(16),
-                      AppTextFileld(
-                        textEditingController: authorTextController,
-                        textInputType: TextInputType.datetime,
-                        labeltext: "Auteur",
-                        readOnly: true,
-                        validator: (value) => titleValidator(value),
                       ),
                     ],
                   ),
