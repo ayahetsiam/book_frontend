@@ -1,12 +1,11 @@
-import 'package:book_ui/data/models/author_model.dart';
-
 class BookModel {
+  String id;
   String isbn;
   String title;
   String artwork;
   int page;
   String writtenAt;
-  AuthorModel author;
+  String author;
 
   BookModel({
     required this.isbn,
@@ -15,27 +14,30 @@ class BookModel {
     required this.page,
     required this.writtenAt,
     required this.author,
+    required this.id,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     return BookModel(
-      isbn: json["isbn"] as String,
+      id: json["_id"] as String,
+      isbn: json["ISBN"] as String,
       title: json["title"] as String,
       artwork: json["artwork"] as String,
       page: json["page"] as int,
       writtenAt: json["writtenAt"] as String,
-      author: AuthorModel.fromJson(json["author"]),
+      author: json["author"] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "isbn": isbn,
+      "_id": id,
+      "ISBN": isbn,
       "title": title,
       "artwork": artwork,
       "page": page,
       "writtenAt": writtenAt,
-      "author": author.toJson(),
+      "author": author,
     };
   }
 }

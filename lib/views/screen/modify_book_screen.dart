@@ -1,3 +1,4 @@
+import 'package:book_ui/data/models/author_model.dart';
 import 'package:book_ui/data/models/book_models.dart';
 import 'package:book_ui/views/components/textfileds/app_textfield.dart';
 import 'package:book_ui/views/components/app_snake_bar.dart';
@@ -7,19 +8,21 @@ import 'package:book_ui/views/configs/style.dart';
 
 class ModifyBookScreen extends StatefulWidget {
   final BookModel book;
-  const ModifyBookScreen({super.key, required this.book});
+  final AuthorModel bookAuthor;
+  const ModifyBookScreen({
+    super.key,
+    required this.book,
+    required this.bookAuthor,
+  });
 
   @override
   State<ModifyBookScreen> createState() => _ModifyBookScreenState();
 }
 
 class _ModifyBookScreenState extends State<ModifyBookScreen> {
-  TextEditingController isbnTextController = TextEditingController();
   TextEditingController titleTextController = TextEditingController();
   TextEditingController artworkTextController = TextEditingController();
   TextEditingController pageNumberTextController = TextEditingController();
-  TextEditingController dateTextController = TextEditingController();
-  TextEditingController authorTextController = TextEditingController();
 
   String? titleValidator(String? value) {
     return value != null && value.contains("@")
@@ -93,7 +96,7 @@ class _ModifyBookScreenState extends State<ModifyBookScreen> {
                                   style: AppStyle.notImportantTitleTextStyle),
                               const Gap(4),
                               Text(
-                                  "${widget.book.author.firstname} ${widget.book.author.name}"),
+                                  "${widget.bookAuthor.firstname} ${widget.bookAuthor.name}"),
                             ],
                           ),
                           const Gap(16),

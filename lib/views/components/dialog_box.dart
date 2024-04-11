@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ConfirmationDialog extends StatelessWidget {
+class ConfirmationDialog extends StatefulWidget {
   const ConfirmationDialog(
       {Key? key,
       required this.title,
@@ -8,13 +8,19 @@ class ConfirmationDialog extends StatelessWidget {
       required this.onConfirmDeleting})
       : super(key: key);
   final String title;
-  final Text content;
+  final Widget content;
   final Function? onConfirmDeleting;
+
+  @override
+  State<ConfirmationDialog> createState() => _ConfirmationDialogState();
+}
+
+class _ConfirmationDialogState extends State<ConfirmationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
-      content: content,
+      title: Text(widget.title),
+      content: widget.content,
       actions: [
         TextButton(
           onPressed: () {
@@ -24,7 +30,7 @@ class ConfirmationDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            onConfirmDeleting;
+            widget.onConfirmDeleting;
           },
           child: const Text("Oui"),
         ),

@@ -3,6 +3,8 @@ import 'package:book_ui/views/components/textfileds/app_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:book_ui/views/components/app_snake_bar.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:book_ui/data/dataSources/author_queries.dart';
 
 class ModifyAuthorScreen extends StatefulWidget {
   const ModifyAuthorScreen({super.key, required this.author});
@@ -31,10 +33,32 @@ class _ModifyAuthorScreenState extends State<ModifyAuthorScreen> {
         : null;
   }
 
-  void validateForm(BuildContext context) {
+  Future<void> validateForm(Map<String, dynamic> variables) async {
+    //print(variables);
+    QueryResult result;
+    try {
+      result = await GraphQLProvider.of(context).value.mutate(MutationOptions(
+            document: gql(updateAuthorMutation),
+            variables: variables,
+          ));
+      if (result.isLoading) {
+        const CircularProgressIndicator();
+      }
+     // print(result);
+      if (result.data != null) {
+        afterSuccess();
+      }
+    } catch (error) {
+      //print(result);
+      debugPrint("Erreur lors de la mutation: $error");
+    }
+  }
+
+  void afterSuccess() {
     Navigator.of(context).pop();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(AppSnackBar(snackContent: "Auteur modifié avec succès"));
+    ScaffoldMessenger.of(context).showSnackBar(
+      AppSnackBar(snackContent: "Auteur modifié avec succès"),
+    );
   }
 
   getDefaultTextFieldValue() {
@@ -88,8 +112,23 @@ class _ModifyAuthorScreenState extends State<ModifyAuthorScreen> {
                 ),
                 const Gap(16),
                 ElevatedButton(
-                    onPressed: () => validateForm(context),
-                    child: const Text("Valider"))
+                  onPressed: () async {
+                    Map<String, dynamic> variable = {"key": widget.author.id};
+                    if (widget.author.firstname !=
+                        firstnameTextcontroller.text) {
+                      variable["firstName"] = firstnameTextcontroller.text;
+                    }
+                    if (widget.author.name != nameTextcontroller.text) {
+                      variable["name"] = nameTextcontroller.text;
+                    }
+                    if (variable.length != 1) {
+                      await validateForm(variable);
+                    } else {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text("Valider"),
+                )
               ],
             ),
           ),

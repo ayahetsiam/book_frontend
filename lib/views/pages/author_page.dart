@@ -1,7 +1,8 @@
 import 'package:book_ui/data/models/author_model.dart';
 import 'package:book_ui/views/components/author_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:book_ui/data/dataSources/author_data_source.dart';
+import 'package:book_ui/data/dataSources/author_queries.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class AuthorPage extends StatefulWidget {
   const AuthorPage({super.key});
@@ -11,34 +12,44 @@ class AuthorPage extends StatefulWidget {
 }
 
 class _AuthorPageState extends State<AuthorPage> {
-  onPressOnAddAuthor() {
-    Navigator.of(context).pushNamed("addAuthor");
-  }
-
   late List<AuthorModel> authorData;
 
-  getAuthors() {
-    authorData = authorDb.map((e) => AuthorModel.fromJson(e)).toList();
-  }
-
-  @override
-  void initState() {
-    getAuthors();
-    super.initState();
+  onPressOnAddAuthor() {
+    Navigator.of(context).pushNamed("addAuthor");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemBuilder: (context, index) => AuthorTile(
-          author: authorData[index],
+      body: Query(
+        options: QueryOptions(
+          document: gql(getAuthorsQuery),
         ),
-        itemCount: authorData.length,
+        builder: (QueryResult result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            return const Center(
+              child: Text("il y a une erreur"),
+            );
+          }
+          if (result.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final List authors = result.data?["authors"];
+          authorData = authors.map((e) => AuthorModel.fromJson(e)).toList();
+          //debugPrint(authors.toString());
+          return ListView.builder(
+            itemBuilder: (context, index) =>
+                AuthorTile(author: authorData[index]),
+            itemCount: authorData.length,
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => {onPressOnAddAuthor()},
-          child: const Icon(Icons.person_add_alt_outlined)),
+        onPressed: () => {
+          onPressOnAddAuthor(),
+        },
+        child: const Icon(Icons.person_add_alt_outlined),
+      ),
     );
   }
 }
