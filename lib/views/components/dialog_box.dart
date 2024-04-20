@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ConfirmationDialog extends StatefulWidget {
-  const ConfirmationDialog(
-      {Key? key,
-      required this.title,
-      required this.content,
-      required this.onConfirmDeleting})
-      : super(key: key);
+  const ConfirmationDialog({
+    Key? key,
+    required this.title,
+    required this.content,
+  }) : super(key: key);
   final String title;
   final Widget content;
-  final Function? onConfirmDeleting;
 
   @override
   State<ConfirmationDialog> createState() => _ConfirmationDialogState();
@@ -24,13 +22,15 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(false);
+            Navigator.of(context)
+                .pop(false); // Fermez la boîte de dialogue avec la valeur false
           },
           child: const Text("Non"),
         ),
         TextButton(
           onPressed: () {
-            widget.onConfirmDeleting;
+            Navigator.of(context)
+                .pop(true); // Fermez la boîte de dialogue avec la valeur true
           },
           child: const Text("Oui"),
         ),

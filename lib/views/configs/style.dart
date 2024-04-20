@@ -16,4 +16,15 @@ class AppStyle {
   static const FontWeight normalTextFontWeight = FontWeight.normal;
   static const TextStyle notImportantTitleTextStyle =
       TextStyle(color: Colors.grey, fontWeight: FontWeight.bold);
+  static const TextStyle notImportantBodyTextStyle =
+      TextStyle(color: Colors.grey, fontWeight: FontWeight.normal);
+
+  static LinearGradient shimmerGradient = LinearGradient(
+    colors: [
+      Colors.grey[100]!,
+      Colors.grey[400]!,
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }

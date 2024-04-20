@@ -7,7 +7,8 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 void main() {
   runApp(
     GraphQLProvider(
-      client: graphqlClient("https://9d44-102-64-218-132.ngrok-free.app/"),
+      client: graphqlClient(
+          "https://41be-2c0f-f0f8-69b-4d40-c91a-bd-d48b-904.ngrok-free.app/"),
       child: const MyApp(),
     ),
   );

@@ -1,8 +1,12 @@
+import 'package:book_ui/data/endpoint/author_endpoint.dart';
 import 'package:book_ui/data/models/author_model.dart';
+import 'package:book_ui/views/animations/author_tile_shimmer.dart';
 import 'package:book_ui/views/components/author_tile.dart';
+import 'package:book_ui/views/configs/style.dart';
+import 'package:book_ui/views/screen/add_author_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:book_ui/data/dataSources/author_queries.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AuthorPage extends StatefulWidget {
   const AuthorPage({super.key});
@@ -15,7 +19,12 @@ class _AuthorPageState extends State<AuthorPage> {
   late List<AuthorModel> authorData;
 
   onPressOnAddAuthor() {
-    Navigator.of(context).pushNamed("addAuthor");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddAuthorScreen(),
+      ),
+    );
   }
 
   @override
@@ -23,16 +32,39 @@ class _AuthorPageState extends State<AuthorPage> {
     return Scaffold(
       body: Query(
         options: QueryOptions(
-          document: gql(getAuthorsQuery),
+          document: gql(AuthorEndPoint.getAuthorsQuery),
         ),
         builder: (QueryResult result, {fetchMore, refetch}) {
           if (result.hasException) {
             return const Center(
-              child: Text("il y a une erreur"),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.wifi_off_outlined,
+                    size: 14,
+                    color: Colors.grey,
+                  ),
+                  Text(
+                    "Erreur de connexion",
+                    style: AppStyle.notImportantTitleTextStyle,
+                  ),
+                  Text(
+                    "Vérifiez votre connexion Wi-Fi ou Internet.",
+                    style: AppStyle.notImportantTitleTextStyle,
+                  ),
+                ],
+              ),
             );
           }
           if (result.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) => Shimmer(
+                gradient: AppStyle.shimmerGradient,
+                child: const AuthorTileShimmer(),
+              ),
+            );
           }
           final List authors = result.data?["authors"];
           authorData = authors.map((e) => AuthorModel.fromJson(e)).toList();

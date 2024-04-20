@@ -13,4 +13,7 @@ class AppColor {
   static Color surfaceColor = const Color(0xFFF2F2F7);
   static Color errorColor = Colors.red;
   static Color onErrorColor = Colors.white;
+
+  static Color shimmerConponentColors = Colors.grey[200]!;
+
 }

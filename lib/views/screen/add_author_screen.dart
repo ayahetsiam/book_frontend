@@ -1,9 +1,9 @@
+import 'package:book_ui/data/mutations/author_mutation.dart';
 import 'package:book_ui/views/components/textfileds/app_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:book_ui/views/components/app_snake_bar.dart';
 
-// ignore: must_be_immutable
 class AddAuthorScreen extends StatefulWidget {
   const AddAuthorScreen({super.key});
 
@@ -12,6 +12,11 @@ class AddAuthorScreen extends StatefulWidget {
 }
 
 class _AddAuthorScreenState extends State<AddAuthorScreen> {
+  final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  TextEditingController nameTextcontroller = TextEditingController();
+  TextEditingController firstnameTextcontroller = TextEditingController();
+
   String? nameValidator(String? value) {
     return value != null
         ? (int.tryParse(value) != null) || int.tryParse(value) != null
@@ -28,16 +33,50 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
         : null;
   }
 
-  void validateForm(BuildContext context) {
-    Navigator.of(context).pop();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(AppSnackBar(snackContent: "Auteur ajouté avec succès"));
+  String? nameSaver(String? value) {
+    return value == null ? "Ce champs est requise" : null;
+  }
+
+  void submitForm(
+    Map<String, dynamic> author,
+  ) async {
+    print(author.toString());
+    try {
+      final result = await AuthorMutation.createMutation(
+        context: context,
+        author: author,
+      );
+      if (result.hasException) {
+        //todo: implement this part of code when exception is raised
+        print(result.exception.toString());
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(
+          AppSnackBar(snackContent: "Auteur ajouté avec succès"),
+        );
+      }
+    } catch (e) {
+      debugPrint(
+        e.toString(),
+      );
+    } finally {
+      setState(() {
+        _isLoading == false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameTextcontroller = TextEditingController();
-    TextEditingController firstnameTextcontroller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -48,6 +87,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
+            key: _formKey,
             autovalidateMode: AutovalidateMode.always,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -62,6 +102,7 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
                         hinttext: "Entrez votre nom",
                         labeltext: "Nom *",
                         validator: nameValidator,
+                        onsaved: nameSaver,
                       ),
                       const Gap(20),
                       AppTextFileld(
@@ -70,14 +111,29 @@ class _AddAuthorScreenState extends State<AddAuthorScreen> {
                         hinttext: "Entrez votre prenom",
                         labeltext: "Prenom *",
                         validator: firstNameValidator,
+                        onsaved: nameSaver,
                       ),
                     ],
                   ),
                 ),
                 const Gap(16),
-                ElevatedButton(
-                    onPressed: () => validateForm(context),
-                    child: const Text("Valider"))
+                _isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            submitForm({
+                              'name': nameTextcontroller.text,
+                              'firstName': firstnameTextcontroller.text
+                            });
+                          }
+                        },
+                        child: const Text("Valider"),
+                      ),
               ],
             ),
           ),

@@ -27,7 +27,9 @@ class DateTextFieldState extends State<DateTextField> {
   void initState() {
     super.initState();
     if (widget.textEditingController.text.isNotEmpty) {
-      _selectedDate = DateTime.tryParse(widget.textEditingController.text);
+      _selectedDate = DateTime.tryParse(
+        widget.textEditingController.text,
+      );
     }
   }
 
