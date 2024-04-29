@@ -8,7 +8,7 @@ void main() {
   runApp(
     GraphQLProvider(
       client: graphqlClient(
-          "https://41be-2c0f-f0f8-69b-4d40-c91a-bd-d48b-904.ngrok-free.app/"),
+          "http://localhost:3000/"),
       child: const MyApp(),
     ),
   );
